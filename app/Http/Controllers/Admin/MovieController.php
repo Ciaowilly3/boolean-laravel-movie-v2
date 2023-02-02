@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -57,7 +58,9 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+
+        return  view('admin.movies.edit', compact('movie'));
     }
 
     /**
@@ -69,7 +72,14 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $movie = Movie::findOrFail($id);
+
+        $movie->updated($data);
+
+
+        return redirect()->route('dashboard');
     }
 
     /**
