@@ -16,7 +16,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $movies = Movie::all();
+
+        return view('admin.movies.index', compact('movies'));
     }
 
     /**
@@ -26,7 +28,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view("admin.create");
+        return view("admin.movies.create");
     }
 
     /**
@@ -38,7 +40,7 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         // $data = $request->validated();
-
+        
         $data = $request->all();
 
         $project = new Movie();
@@ -49,7 +51,7 @@ class MovieController extends Controller
         $project->vote = $data['vote'];
         $project->save();
 
-        return redirect()->route('show', $project->id);
+        return redirect()->route('admin.moviesshow', $project->id);
     }
 
     /**
@@ -60,10 +62,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        $movie = Movie::findOrFail($id);
-        return  view('admin.movies.show', compact('movie'));
-    }
-
+         $movie = Movie::findOrFail($id);
+        return  view('admin.movies.show', compact('movie'));    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -74,7 +74,7 @@ class MovieController extends Controller
     {
         $movie = Movie::findOrFail($id);
 
-        return  view('movies.edit', compact('movie'));
+        return  view('admin.movies.edit', compact('movie'));
     }
 
     /**
@@ -91,7 +91,6 @@ class MovieController extends Controller
         $movie = Movie::findOrFail($id);
 
         $movie->updated($data);
-
 
         return redirect()->route('dashboard');
     }

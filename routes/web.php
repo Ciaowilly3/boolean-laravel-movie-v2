@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('movies', MovieController::class)->middleware(['auth','verified']);
+Route::middleware(['auth','verified'])
+    ->prefix('admin/')->name('admin')->resource('movies', MovieController::class);
 
 require __DIR__.'/auth.php';

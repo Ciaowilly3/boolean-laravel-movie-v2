@@ -3,7 +3,7 @@
 @section('content')
     <div class="text-center bg-white rounded-3 py-5">
         <h2>Modifica Film</h2>
-        <form action="{{route ('movies.update', $movie->id)}}" class="form-group w-75 d-inline-block shadow rounded-3 p-3 py-5" method="POST">
+        <form action="{{route ('admin.movies.update', $movie->id)}}" class="form-group w-75 d-inline-block shadow rounded-3 p-3 py-5" method="POST">
             @csrf()
             @method('PUT')
             <div class="mb-3">
@@ -19,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Titolo originale</label>
-                <input name="original_title" class="form-control w-75 mx-auto
+                <input name="original_title" class="form-control text-cente w-75 mx-auto
                 @error('original_title') is-invalid @elseif(old('original_title')) is-valid @enderror">{{old('original_title')}}>
                 @error('original_title')
                     <div class="invalid-feedback">
