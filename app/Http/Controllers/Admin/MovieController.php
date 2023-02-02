@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 
+
 class MovieController extends Controller
 {
     /**
@@ -58,7 +59,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+        return  view('admin.movies.show', compact('movie'));
     }
 
     /**
@@ -69,7 +71,9 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+
+        return  view('movies.edit', compact('movie'));
     }
 
     /**
@@ -81,7 +85,14 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $movie = Movie::findOrFail($id);
+
+        $movie->updated($data);
+
+
+        return redirect()->route('dashboard');
     }
 
     /**
