@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use Illuminate\Http\Request;
-use App\Models\Movie;
+
 
 class MovieController extends Controller
 {
@@ -38,7 +38,7 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         // $data = $request->validated();
-        
+
         $data = $request->all();
 
         $project = new Movie();
@@ -60,7 +60,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+        return  view('admin.movies.show', compact('movie'));
     }
 
     /**
