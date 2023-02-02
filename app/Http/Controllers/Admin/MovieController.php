@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use App\Models\Movie;
 
 class MovieController extends Controller
 {
@@ -25,7 +26,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.create");
     }
 
     /**
@@ -36,7 +37,19 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $data = $request->validated();
+        
+        $data = $request->all();
+
+        $project = new Movie();
+        $project->title = $data['title'];
+        $project->original_title = $data['original_title'];
+        $project->nationality = $data['nationality'];
+        $project->date = $data['date'];
+        $project->vote = $data['vote'];
+        $project->save();
+
+        return redirect()->route('show', $project->id);
     }
 
     /**
@@ -90,6 +103,8 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+        return ("admin.movies.index");
     }
 }
