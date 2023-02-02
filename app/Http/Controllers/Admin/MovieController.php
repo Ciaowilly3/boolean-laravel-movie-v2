@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Movie;
+use App\Http\Requests\storeMovieRequest;
+use App\Http\Requests\updateMovieRequest;
 use Illuminate\Http\Request;
+use App\Models\Movie;
 
 
 class MovieController extends Controller
@@ -37,21 +39,21 @@ class MovieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storeMovieRequest $request)
     {
-        // $data = $request->validated();
-        
-        $data = $request->all();
+        $data = $request->validated();
 
-        $project = new Movie();
-        $project->title = $data['title'];
-        $project->original_title = $data['original_title'];
-        $project->nationality = $data['nationality'];
-        $project->date = $data['date'];
-        $project->vote = $data['vote'];
-        $project->save();
+        // $data = $request->all();
 
-        return redirect()->route('admin.moviesshow', $project->id);
+        $movies = new Movie();
+        $movies->title = $data['title'];
+        $movies->original_title = $data['original_title'];
+        $movies->nationality = $data['nationality'];
+        $movies->date = $data['date'];
+        $movies->vote = $data['vote'];
+        $movies->save();
+
+        return redirect()->route('admin.movies.show', $movies->id);
     }
 
     /**
@@ -84,15 +86,15 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updateMovieRequest $request, $id)
     {
-        $data = $request->all();
+        $data = $request->validated();
 
         $movie = Movie::findOrFail($id);
 
-        $movie->updated($data);
+        $movie->update($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.movies.show', $id);
     }
 
     /**

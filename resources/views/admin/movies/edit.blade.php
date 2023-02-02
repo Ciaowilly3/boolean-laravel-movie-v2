@@ -10,7 +10,7 @@
                 <label class="form-label">Titolo</label>
                 <input type="text" class="form-control text-center w-75 mx-auto
                 @error('title') is-invalid @elseif(old('title')) is-valid @enderror"
-                title="title" value="{{old('title')}}">
+                title="title" value="{{old('title')}}" name="title">
                 @error('title')
                     <div class="invalid-feedback">
                         {{ $message }}

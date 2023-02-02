@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class storeMovieRequest extends FormRequest
@@ -13,7 +14,12 @@ class storeMovieRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::user()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -28,7 +34,7 @@ class storeMovieRequest extends FormRequest
             "original_title" => "nullable|string|max:255",
             "nationality" => "nullable|string",
             "date" => "required|date",
-            "vote" => "integer|decimal:1"
+            "vote" => "integer"
         ];
     }
 
@@ -42,7 +48,6 @@ class storeMovieRequest extends FormRequest
             "nationality.string" => "This field must be a string",
             "date.required" => "Date of publish is required",
             "date.date" => "This field must be a date",
-            "vote.decimal" => "This field can have only :decimal decimal number"
         ];
     }
 }
