@@ -73,7 +73,7 @@ class MovieController extends Controller
     {
         $movie = Movie::findOrFail($id);
 
-        return  view('admin.movies.edit', compact('movie'));
+        return  view('movies.edit', compact('movie'));
     }
 
     /**
